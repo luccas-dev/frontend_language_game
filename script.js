@@ -19,7 +19,7 @@ const cancelButton = document.querySelector('#btn-cancel')
 
 let palavra
 
-let tempoRestante = 5
+let tempoRestante = 600
 let cronometro
 let jogoAtivo = true
 
