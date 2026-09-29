@@ -57,6 +57,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1.5rem;
 
     background-color: #4140409f;
 
@@ -88,6 +89,20 @@ main {
             border-radius: 5px;
             background: #00ff4c;
             cursor: pointer;
+        }
+    }
+
+    & #wrong-words-container {
+        max-height: 70%;
+        overflow-y: auto;
+
+        & h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        & p {
+            display: flex;
+            justify-content: space-between;
         }
     }
 }

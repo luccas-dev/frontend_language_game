@@ -16,10 +16,12 @@ const correctWords = document.querySelector('#correct-words')
 const wrongWords = document.querySelector('#wrong-words')
 const saveButton = document.querySelector('#btn-save')
 const cancelButton = document.querySelector('#btn-cancel')
+const wrongWordsContainer = document.querySelector('#wrong-words-container')
 
 let palavra
+let wrongWordsList = []
 
-let tempoRestante = 600
+let tempoRestante = 5
 let cronometro
 let jogoAtivo = true
 
@@ -32,6 +34,8 @@ let dataGame = {
     wrong_words: 0,
     difficulty: 0
 }
+
+let URL = 'https://backend-language-game.onrender.com'
 
 function startGame() {
     dataGame.player_name = fieldName.value
@@ -64,8 +68,6 @@ function endGame() {
     if(fieldResponse) fieldResponse.disabled = true
     if(sendButton) sendButton.disabled = true
 
-    console.log(dataGame)
-
     endModal.style.display = 'flex'
     playerName.innerHTML += `<em>${dataGame.player_name}</em>`
     if(dataGame.difficulty == 1) {
@@ -77,12 +79,18 @@ function endGame() {
     }
     correctWords.innerHTML += `<em>${dataGame.correct_words}</em>`
     wrongWords.innerHTML += `<em>${dataGame.wrong_words}</em>`
+    
+    for(item of wrongWordsList) {
+        const answerKey = document.createElement('p')
+        answerKey.innerHTML = `<span>${item.word}</span> <span>${item.translations}</span>`
+        wrongWordsContainer.appendChild(answerKey)
+    }
 
     tempo.style.color = 'red'
 }
 
 saveButton.addEventListener('click', async () => {
-    await fetch('https://backend-language-game.onrender.com/save', {
+    await fetch(`${URL}/save`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -97,7 +105,7 @@ cancelButton.addEventListener('click', () => {
 })
 
 const randomWord = async () => {
-    const response = await fetch(`https://backend-language-game.onrender.com?difficulty=${dataGame.difficulty}`)
+    const response = await fetch(`${URL}?difficulty=${dataGame.difficulty}`)
     const data = await response.json()
     palavra = data
 
@@ -110,7 +118,7 @@ sendButton.addEventListener('click', async () => {
         userResponse: fieldResponse.value
     }
 
-    const response = await fetch('https://backend-language-game.onrender.com/validate', {
+    const response = await fetch(`${URL}/validate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -119,6 +127,7 @@ sendButton.addEventListener('click', async () => {
     })
 
     const data = await response.json()
+
     if(data.correct == true) {
         messageResponse.classList.add('true')
         messageResponse.classList.remove('false')
@@ -129,6 +138,8 @@ sendButton.addEventListener('click', async () => {
         messageResponse.classList.remove('true')
         messageResponse.innerText = 'ERRADO'
         dataGame.wrong_words++
+
+        wrongWordsList.push({word: data.word, translations: data.translations})
     }
     randomWord()
 })
