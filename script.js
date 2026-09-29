@@ -1,4 +1,5 @@
 const wordField = document.querySelector('#word_selected')
+const translationField = document.querySelector('#translation')
 const sendButton = document.querySelector('#btn-send')
 const fieldResponse = document.querySelector('#response')
 const messageResponse = document.querySelector('#message')
@@ -21,7 +22,7 @@ const wrongWordsContainer = document.querySelector('#wrong-words-container')
 let palavra
 let wrongWordsList = []
 
-let tempoRestante = 5
+let tempoRestante = 20
 let cronometro
 let jogoAtivo = true
 
@@ -36,13 +37,14 @@ let dataGame = {
 }
 
 let URL = 'https://backend-language-game.onrender.com'
+let URL_LOCAL = 'http://localhost:3530'
 
 function startGame() {
     dataGame.player_name = fieldName.value
     dataGame.difficulty = fieldDifficulty.value
+    randomWord()
 
     modal.style.display = 'none'
-    randomWord()
     cronometro = setInterval(() => {
         tempoRestante--
         updateDisplayTime()
@@ -90,7 +92,7 @@ function endGame() {
 }
 
 saveButton.addEventListener('click', async () => {
-    await fetch(`${URL}/save`, {
+    await fetch(`${URL_LOCAL}/save`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -105,7 +107,7 @@ cancelButton.addEventListener('click', () => {
 })
 
 const randomWord = async () => {
-    const response = await fetch(`${URL}?difficulty=${dataGame.difficulty}`)
+    const response = await fetch(`${URL_LOCAL}?difficulty=${dataGame.difficulty}`)
     const data = await response.json()
     palavra = data
 
@@ -113,12 +115,13 @@ const randomWord = async () => {
 }
 
 sendButton.addEventListener('click', async () => {
+    sendButton.disabled = true
     const dados = {
         id_word: palavra.id_word,
         userResponse: fieldResponse.value
     }
 
-    const response = await fetch(`${URL}/validate`, {
+    const response = await fetch(`${URL_LOCAL}/validate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -139,9 +142,15 @@ sendButton.addEventListener('click', async () => {
         messageResponse.innerText = 'ERRADO'
         dataGame.wrong_words++
 
+        translationField.innerText = data.translations
         wrongWordsList.push({word: data.word, translations: data.translations})
     }
-    randomWord()
+    setTimeout(() => {
+        sendButton.disabled = false
+        fieldResponse.value = ''
+        translationField.innerText = ''
+        randomWord()
+    }, 3000)
 })
 
 startButton.addEventListener('click', () => startGame())

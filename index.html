@@ -17,11 +17,14 @@
 
     <main>
         <div id="message"></div>
-        <h2 id="word_selected"></h2>
+        <div class="words">
+            <h2 id="word_selected"></h2>
+            <span id="translation"></span>
+        </div>
         <div class="response-container">
             <label for="response">
                 Sua Resposta:
-                <input type="text" id="response" name="response">
+                <input type="text" id="response" name="response" required>
             </label>
             <button id="btn-send">Enviar</button>
         </div>
@@ -31,7 +34,7 @@
         <div class="container">
             <label for="nome">
                 Nome:
-                <input type="text" name="nome" id="nome">
+                <input type="text" name="nome" id="nome" required>
             </label>
 
             <label for="level">

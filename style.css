@@ -164,5 +164,9 @@ main {
         font-weight: bold;
         cursor: pointer;
         transition: 0.2s;
+
+        &:disabled {
+            background-color: #697e94;
+        }
     }
 }
