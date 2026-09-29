@@ -22,7 +22,7 @@ const wrongWordsContainer = document.querySelector('#wrong-words-container')
 let palavra
 let wrongWordsList = []
 
-let tempoRestante = 20
+let tempoRestante = 600
 let cronometro
 let jogoAtivo = true
 
