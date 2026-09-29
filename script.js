@@ -92,7 +92,7 @@ function endGame() {
 }
 
 saveButton.addEventListener('click', async () => {
-    await fetch(`${URL_LOCAL}/save`, {
+    await fetch(`${URL}/save`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ cancelButton.addEventListener('click', () => {
 })
 
 const randomWord = async () => {
-    const response = await fetch(`${URL_LOCAL}?difficulty=${dataGame.difficulty}`)
+    const response = await fetch(`${URL}?difficulty=${dataGame.difficulty}`)
     const data = await response.json()
     palavra = data
 
@@ -121,7 +121,7 @@ sendButton.addEventListener('click', async () => {
         userResponse: fieldResponse.value
     }
 
-    const response = await fetch(`${URL_LOCAL}/validate`, {
+    const response = await fetch(`${URL}/validate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
