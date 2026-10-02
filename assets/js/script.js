@@ -4,10 +4,14 @@ const sendButton = document.querySelector('#btn-send')
 const fieldResponse = document.querySelector('#response')
 const messageResponse = document.querySelector('#message')
 
+// MODALS
+const configModal = document.querySelector('#config-modal')
+const gameModal = document.querySelector('#game-modal')
+
 // DADOS DO JOGO
 const modal = document.querySelector('#modal')
 const fieldName = document.querySelector('#nome')
-const fieldDifficulty = document.querySelector('#level')
+const fieldDifficulty = document.getElementsByName('difficulty')
 
 // MODAL END GAME
 const endModal = document.querySelector('#end-modal')
@@ -22,12 +26,12 @@ const wrongWordsContainer = document.querySelector('#wrong-words-container')
 let palavra
 let wrongWordsList = []
 
-let tempoRestante = 600
+let tempoRestante = 20
 let cronometro
 let jogoAtivo = true
 
 let tempo = document.querySelector('#tempo')
-let startButton = document.querySelector('#startButton')
+let startButton = document.querySelector('#btn-start')
 
 let dataGame = {
     player_name: '',
@@ -40,16 +44,15 @@ let URL = 'https://backend-language-game.onrender.com'
 let URL_LOCAL = 'http://localhost:3530'
 
 function startGame() {
-    dataGame.player_name = fieldName.value
-    dataGame.difficulty = fieldDifficulty.value
     randomWord()
 
-    modal.style.display = 'none'
     cronometro = setInterval(() => {
         tempoRestante--
         updateDisplayTime()
 
         if(tempoRestante <= 0) {
+            gameModal.style.display = 'none'
+            endModal.style.display = 'flex'
             endGame()
         }
     }, 1000)
@@ -153,4 +156,27 @@ sendButton.addEventListener('click', async () => {
     }, 3000)
 })
 
-startButton.addEventListener('click', () => startGame())
+startButton.addEventListener('click', () => {
+    if(fieldName.value == '') {
+        alert('Por favor, insira seu nome para iniciar o jogo.')
+        return
+    }
+
+    if(!Array.from(fieldDifficulty).some(radio => radio.checked)) {
+        alert('Por favor, selecione uma dificuldade para iniciar o jogo.')
+        return
+    }
+
+    configModal.style.display = 'none'
+    gameModal.style.display = 'flex'
+
+    dataGame.player_name = fieldName.value
+
+    fieldDifficulty.forEach((radio) => {
+        if(radio.checked) {
+            dataGame.difficulty = radio.value
+        }
+    })
+
+    startGame()
+})

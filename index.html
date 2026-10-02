@@ -3,69 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language Game</title>
+    <title>Destrava Língua</title>
 
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/css/_global.css">
+    <link rel="stylesheet" href="./assets/css/index.css">
 </head>
 <body>
-    <header>
-        <h1>STUDY GAME</h1>
-        <div id="temporizador">
-            Tempo Restante: <span id="tempo"></span>
-        </div>
-    </header>
-
     <main>
-        <div id="message"></div>
-        <div class="words">
-            <h2 id="word_selected"></h2>
-            <span id="translation"></span>
-        </div>
-        <div class="response-container">
-            <label for="response">
-                Sua Resposta:
-                <input type="text" id="response" name="response" required>
-            </label>
-            <button id="btn-send">Enviar</button>
-        </div>
+        <section id="config-modal">
+            <header>
+                <h1>Destrava Língua</h1>
+                <p>Configure Sua Sessão</p>
+            </header>
+            <div class="container">
+                <h3>Usuário</h3>
+                <input type="text" name="nome" id="nome" required>
+            </div>
+    
+            <div class="container">
+                <h3>Idiomas</h3>
+                <div class="languages">
+                    <div>
+                        <input type="radio" name="idioma" id="coreano_portugues" value="coreano">
+                        <label for="coreano_portugues">Coreano > Português</label>
+                    </div>
+    
+                    <div>
+                        <input type="radio" name="idioma" id="" value="" disabled>
+                        <label for="">Em Breve</label>
+                    </div>
+    
+                    <div>
+                        <input type="radio" name="idioma" id="" value="" disabled>
+                        <label for="">Em Breve</label>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="container">
+                <h3>Dificuldade</h3>
+                <div class="levels">
+                    <div>
+                        <input type="radio" name="difficulty" id="difficulty-1" value="1">
+                        <label for="difficulty-1">Fácil</label>
+                    </div>
+    
+                    <div>
+                        <input type="radio" name="difficulty" id="difficulty-2" value="2">
+                        <label for="difficulty-2">Médio</label>
+                    </div>
+    
+                    <div>
+                        <input type="radio" name="difficulty" id="difficulty-3" value="3">
+                        <label for="difficulty-3">Difícil</label>
+                    </div>
+                </div>
+            </div>
+    
+            <button id="btn-start">Iniciar Teste</button>
+        </section>
+
+        <section id="game-modal">
+            <div id="temporizador">
+                <span id="tempo">00:00</span>
+            </div>
+            <div class="words">
+                <h2 id="word_selected">JKHSDF</h2>
+                <span id="translation">sdjfhsdj</span>
+            </div>
+            <div class="response-container">
+                <span id="message"></span>
+                <input type="text" name="response" id="response" required placeholder="Digite sua resposta">
+                <button id="btn-send">Enviar Resposta</button>
+            </div>
+        </section>
+
+        <section id="end-modal">
+            <div class="container">
+                <h2>DADOS DO JOGO</h2>
+                <span id="player-name"><strong>Nome do Jogador:</strong> </span>
+                <span id="level-game"><strong>Dificuldade:</strong> </span>
+                <span id="correct-words"><strong>Palavras Corretas:</strong> </span>
+                <span id="wrong-words"><strong>Palavras Erradas:</strong> </span>
+                <div class="buttons">
+                    <button id="btn-cancel" class="btn">Cancelar</button>
+                    <button id="btn-save" class="btn">Salvar</button>
+                </div>
+            </div>
+            <div id="wrong-words-container" class="container">
+                <h3>Palavras Erradas - Traduções</h3>
+            </div>
+        </section>
     </main>
 
-    <div id="modal">
-        <div class="container">
-            <label for="nome">
-                Nome:
-                <input type="text" name="nome" id="nome" required>
-            </label>
-
-            <label for="level">
-                Dificuldade:
-                <select name="level" id="level">
-                    <option value="1">Fácil</option>
-                    <option value="2">Médio</option>
-                    <option value="3">Dificil</option>
-                </select>
-            </label>
-            <button id="startButton">Start Game</button>
-        </div>
-    </div>
-
-    <div id="end-modal">
-        <div class="container">
-            <h2>DADOS DO JOGO</h2>
-            <span id="player-name"><strong>Nome do Jogador:</strong> </span>
-            <span id="level-game"><strong>Dificuldade:</strong> </span>
-            <span id="correct-words"><strong>Palavras Corretas:</strong> </span>
-            <span id="wrong-words"><strong>Palavras Erradas:</strong> </span>
-            <div class="buttons">
-                <button id="btn-cancel" class="btn">Cancelar</button>
-                <button id="btn-save" class="btn">Salvar</button>
-            </div>
-        </div>
-        <div id="wrong-words-container" class="container">
-            <h3>Palavras Erradas - Traduções</h3>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>
