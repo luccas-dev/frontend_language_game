@@ -1,28 +1,27 @@
-const wordField = document.querySelector('#word_selected')
-const translationField = document.querySelector('#translation')
-const sendButton = document.querySelector('#btn-send')
-const fieldResponse = document.querySelector('#response')
-const messageResponse = document.querySelector('#message')
+const wordField = document.querySelector('#word_selected') // Campo onde a palavra aleatória será exibida
+const translationField = document.querySelector('#translation') // Campo onde a tradução será exibida
+const sendButton = document.querySelector('#btn-send') // Botão para enviar a resposta do usuário
+const fieldResponse = document.querySelector('#response') // Campo onde p usuário digita a resposta
+const messageResponse = document.querySelector('#message') // Campo onde a mensagem (correto/errado) será exibida
 
 // MODALS
-const configModal = document.querySelector('#config-modal')
-const gameModal = document.querySelector('#game-modal')
+const configModal = document.querySelector('#config-modal') // Modal de configuração da partida
+const gameModal = document.querySelector('#game-modal') // Modal da partida em andamento
+const endModal = document.querySelector('#end-modal') // Modal de fim de partida
 
 // DADOS DO JOGO
-const modal = document.querySelector('#modal')
-const fieldName = document.querySelector('#nome')
-const fieldDifficulty = document.getElementsByName('difficulty')
-const fieldTime = document.getElementsByName('time')
+const fieldName = document.querySelector('#nome') // Campo onde o usuário digita seu nome
+const fieldDifficulty = document.getElementsByName('difficulty') // Campo onde o usuário seleciona a dificuldade do jogo
+const fieldTime = document.getElementsByName('time') // Campo onde o usuário seleciona o tempo da partida
 
-// MODAL END GAME
-const endModal = document.querySelector('#end-modal')
-const playerName = document.querySelector('#player-name')
-const levelGame = document.querySelector('#level-game')
-const correctWords = document.querySelector('#correct-words')
-const wrongWords = document.querySelector('#wrong-words')
-const saveButton = document.querySelector('#btn-save')
-const cancelButton = document.querySelector('#btn-cancel')
-const wrongWordsContainer = document.querySelector('#wrong-words-container')
+// DADOS DO FIM DA PARTIDA
+const playerName = document.querySelector('#player-name') // Campo onde o nome do jogador será exibido no fim da partida
+const levelGame = document.querySelector('#level-game') // Campo onde o nível do jogo será exibido
+const correctWords = document.querySelector('#correct-words') // Campo onde o número de palavras corretas será exibido
+const wrongWords = document.querySelector('#wrong-words') // Campo onde o número de palavras erradas será exibido
+const saveButton = document.querySelector('#btn-save') // Botão para salvar os resultados
+const cancelButton = document.querySelector('#btn-cancel') // Botão para cancelar e fechar o modal
+const wrongWordsContainer = document.querySelector('#wrong-words-container') // Campo onde as palavras erradas serão exibidas
 
 let palavra
 let wrongWordsList = []
@@ -43,6 +42,7 @@ let dataGame = {
 let URL = 'https://backend-language-game.onrender.com'
 let URL_LOCAL = 'http://localhost:3530'
 
+// FUNÇÃO QUE INICIA O JOGO
 function startGame() {
     randomWord()
 
@@ -58,6 +58,7 @@ function startGame() {
     }, 1000)
 }
 
+// FUNÇÃO QUE BUSCA UMA PALAVRA ALEATÓRIA NA API
 const randomWord = async () => {
     const response = await fetch(`${URL}?difficulty=${dataGame.difficulty}`)
     const data = await response.json()
@@ -66,6 +67,7 @@ const randomWord = async () => {
     wordField.innerText = palavra.word
 }
 
+// FUNÇÃO QUE ATUALIZA O TEMPO DO CRONOMETRO NA TELA
 function updateDisplayTime() {
     let minutos = Math.floor(tempoRestante / 60)
     let segundos = tempoRestante % 60
@@ -75,6 +77,7 @@ function updateDisplayTime() {
     tempo.innerText = `${minutosFormatados}:${segundosFormatados}`
 }
 
+// FUNÇÃO QUE FINALIZA O JOGO
 function endGame() {
     jogoAtivo = false
     clearInterval(cronometro)
@@ -82,6 +85,13 @@ function endGame() {
     if(fieldResponse) fieldResponse.disabled = true
     if(sendButton) sendButton.disabled = true
 
+    showEndModal()
+
+    tempo.style.color = 'red'
+}
+
+// FUNÇÃO QUE EXIBE O MODAL DE FIM DA PARTIDA E OS RESULTADOS
+function showEndModal() {
     endModal.style.display = 'flex'
     playerName.innerHTML += `<em>${dataGame.player_name}</em>`
     if(dataGame.difficulty == 1) {
@@ -99,8 +109,6 @@ function endGame() {
         answerKey.innerHTML = `<span>${item.word}</span> <span>${item.translations}</span>`
         wrongWordsContainer.appendChild(answerKey)
     }
-
-    tempo.style.color = 'red'
 }
 
 startButton.addEventListener('click', () => {
