@@ -58,12 +58,21 @@ function startGame() {
     }, 1000)
 }
 
+const randomWord = async () => {
+    const response = await fetch(`${URL}?difficulty=${dataGame.difficulty}`)
+    const data = await response.json()
+    palavra = data
+
+    wordField.innerText = palavra.word
+}
+
 function updateDisplayTime() {
     let minutos = Math.floor(tempoRestante / 60)
     let segundos = tempoRestante % 60
 
     let segundosFormatados = segundos < 10 ? '0' + segundos : segundos
-    tempo.innerText = `${minutos}:${segundosFormatados}`
+    let minutosFormatados = minutos < 10 ? '0' + minutos : minutos
+    tempo.innerText = `${minutosFormatados}:${segundosFormatados}`
 }
 
 function endGame() {
@@ -94,68 +103,6 @@ function endGame() {
     tempo.style.color = 'red'
 }
 
-saveButton.addEventListener('click', async () => {
-    await fetch(`${URL}/save`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataGame)
-    })
-    window.location.reload()
-})
-
-cancelButton.addEventListener('click', () => {
-    window.location.reload()
-})
-
-const randomWord = async () => {
-    const response = await fetch(`${URL}?difficulty=${dataGame.difficulty}`)
-    const data = await response.json()
-    palavra = data
-
-    wordField.innerText = palavra.word
-}
-
-sendButton.addEventListener('click', async () => {
-    sendButton.disabled = true
-    const dados = {
-        id_word: palavra.id_word,
-        userResponse: fieldResponse.value
-    }
-
-    const response = await fetch(`${URL}/validate`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dados)
-    })
-
-    const data = await response.json()
-
-    if(data.correct == true) {
-        messageResponse.classList.add('true')
-        messageResponse.classList.remove('false')
-        messageResponse.innerText = 'CORRETO'
-        dataGame.correct_words++
-    } else {
-        messageResponse.classList.add('false')
-        messageResponse.classList.remove('true')
-        messageResponse.innerText = 'ERRADO'
-        dataGame.wrong_words++
-
-        translationField.innerText = data.translations
-        wrongWordsList.push({word: data.word, translations: data.translations})
-    }
-    setTimeout(() => {
-        sendButton.disabled = false
-        fieldResponse.value = ''
-        translationField.innerText = ''
-        randomWord()
-    }, 3000)
-})
-
 startButton.addEventListener('click', () => {
     if(fieldName.value == '') {
         alert('Por favor, insira seu nome para iniciar o jogo.')
@@ -184,6 +131,67 @@ startButton.addEventListener('click', () => {
         }
     })
 
-    tempo.innerText = tempoRestante / 60 + ':00'
+    tempo.innerText = (tempoRestante / 60 < 10 ? '0' + (tempoRestante / 60) : tempoRestante / 60) + ':00'
     startGame()
+})
+
+sendButton.addEventListener('click', async () => {
+    sendButton.disabled = true
+    
+    const dados = {
+        id_word: palavra.id_word,
+        userResponse: fieldResponse.value
+    }
+
+    const response = await fetch(`${URL}/validate`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+    })
+
+    const data = await response.json()
+
+    if(data.correct == true) {
+        messageResponse.classList.add('true')
+        messageResponse.classList.remove('false')
+        messageResponse.innerText = 'CORRETO'
+        dataGame.correct_words++
+
+    } else {
+        messageResponse.classList.add('false')
+        messageResponse.classList.remove('true')
+        messageResponse.innerText = 'ERRADO'
+        dataGame.wrong_words++
+
+        wrongWordsList.push({word: data.word, translations: data.translations})
+    }
+
+    translationField.innerText = data.translations
+
+    setTimeout(() => {
+        sendButton.disabled = false
+        fieldResponse.value = ''
+        translationField.innerText = ''
+        messageResponse.classList.remove('true')
+        messageResponse.classList.remove('false')
+        messageResponse.innerText = ''
+        randomWord()
+    }, 3000)
+})
+
+saveButton.addEventListener('click', async () => {
+    await fetch(`${URL}/save`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataGame)
+    })
+    window.location.reload()
+})
+
+cancelButton.addEventListener('click', () => {
+    window.location.reload()
 })
