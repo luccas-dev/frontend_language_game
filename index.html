@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Destrava Língua</title>
 
-    <link rel="stylesheet" href="./assets/css/_global.css">
     <link rel="stylesheet" href="./assets/css/index.css">
 </head>
 <body>
@@ -100,18 +99,37 @@
 
         <section id="end-modal">
             <div class="container">
-                <h2>DADOS DO JOGO</h2>
-                <span id="player-name"><strong>Nome do Jogador:</strong> </span>
-                <span id="level-game"><strong>Dificuldade:</strong> </span>
-                <span id="correct-words"><strong>Palavras Corretas:</strong> </span>
-                <span id="wrong-words"><strong>Palavras Erradas:</strong> </span>
-                <div class="buttons">
-                    <button id="btn-cancel" class="btn">Cancelar</button>
-                    <button id="btn-save" class="btn">Salvar</button>
+                <h2>Fim da Partida</h2>
+
+                <div class="game-data">
+                    <div id="player-name-container">
+                        <strong>Player Name</strong>
+                        <span id="player-name"></span>
+                    </div>
+                    <div id="difficulty">
+                        <strong>Dificuldade:</strong>
+                        <span id="level-game"></span>
+                    </div>
+
+                    <div id="corrects-wrongs">
+                        <strong>Corretas / Erradas</strong>
+                        <p>
+                            <span id="correct-words"></span> / <span id="wrong-words"></span>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div id="wrong-words-container" class="container">
-                <h3>Palavras Erradas - Traduções</h3>
+            <div id="words-container" class="container">
+                <h3>Histórico da Partida</h3>
+                <p id="subtitle">
+                    <span>Palavra</span>
+                    <span>Resposta > Tradução</span>
+                </p>
+            </div>
+
+            <div class="buttons">
+                <button id="btn-cancel" class="btn">Cancelar</button>
+                <button id="btn-save" class="btn">Salvar</button>
             </div>
         </section>
     </main>

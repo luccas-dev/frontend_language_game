@@ -21,10 +21,10 @@ const correctWords = document.querySelector('#correct-words') // Campo onde o n�
 const wrongWords = document.querySelector('#wrong-words') // Campo onde o número de palavras erradas será exibido
 const saveButton = document.querySelector('#btn-save') // Botão para salvar os resultados
 const cancelButton = document.querySelector('#btn-cancel') // Botão para cancelar e fechar o modal
-const wrongWordsContainer = document.querySelector('#wrong-words-container') // Campo onde as palavras erradas serão exibidas
+const wordsContainer = document.querySelector('#words-container') // Campo onde as palavras erradas serão exibidas
 
 let palavra
-let wrongWordsList = []
+let wordsList = []
 
 let cronometro
 let jogoAtivo = true
@@ -40,7 +40,7 @@ let dataGame = {
 }
 
 let URL = 'https://backend-language-game.onrender.com'
-let URL_LOCAL = 'http://localhost:3530'
+// URL = 'http://localhost:3530'
 
 // FUNÇÃO QUE INICIA O JOGO
 function startGame() {
@@ -104,10 +104,10 @@ function showEndModal() {
     correctWords.innerHTML += `<em>${dataGame.correct_words}</em>`
     wrongWords.innerHTML += `<em>${dataGame.wrong_words}</em>`
     
-    for(item of wrongWordsList) {
+    for(item of wordsList) {
         const answerKey = document.createElement('p')
-        answerKey.innerHTML = `<span>${item.word}</span> <span>${item.translations}</span>`
-        wrongWordsContainer.appendChild(answerKey)
+        answerKey.innerHTML = `<span>${item.word}</span> <span><small class='${item.correct}'>${item.response}</small> ${item.translations}</span>`
+        wordsContainer.appendChild(answerKey)
     }
 }
 
@@ -178,10 +178,9 @@ sendButton.addEventListener('click', async () => {
         messageResponse.classList.remove('true')
         messageResponse.innerText = 'ERRADO'
         dataGame.wrong_words++
-
-        wrongWordsList.push({word: data.word, translations: data.translations})
     }
 
+    wordsList.push({correct: data.correct, word: data.word, translations: data.translations, response: data.response})
     translationField.innerText = data.translations
 
     setTimeout(() => {
