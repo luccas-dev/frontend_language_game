@@ -137,6 +137,12 @@ startButton.addEventListener('click', () => {
 
 sendButton.addEventListener('click', async () => {
     sendButton.disabled = true
+
+    if(fieldResponse.value == '') {
+        alert('Por favor, insira uma resposta antes de enviar.')
+        sendButton.disabled = false
+        return
+    }
     
     const dados = {
         id_word: palavra.id_word,
