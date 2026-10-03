@@ -12,6 +12,7 @@ const gameModal = document.querySelector('#game-modal')
 const modal = document.querySelector('#modal')
 const fieldName = document.querySelector('#nome')
 const fieldDifficulty = document.getElementsByName('difficulty')
+const fieldTime = document.getElementsByName('time')
 
 // MODAL END GAME
 const endModal = document.querySelector('#end-modal')
@@ -26,7 +27,6 @@ const wrongWordsContainer = document.querySelector('#wrong-words-container')
 let palavra
 let wrongWordsList = []
 
-let tempoRestante = 600
 let cronometro
 let jogoAtivo = true
 
@@ -178,5 +178,12 @@ startButton.addEventListener('click', () => {
         }
     })
 
+    fieldTime.forEach((time) => {
+        if(time.checked) {
+            tempoRestante = parseInt(time.value)
+        }
+    })
+
+    tempo.innerText = tempoRestante / 60 + ':00'
     startGame()
 })

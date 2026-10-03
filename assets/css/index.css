@@ -6,19 +6,9 @@ h3 {
     color: var(--second-text-color);
 }
 
-body {
-    display: grid;
-    justify-items: center;
-    gap: 4rem;
-
-    background: var(--bg-color);
-    color: var(--primary-text-color);
-}
-
 header {
     display: grid;
     gap: .3rem;
-    margin-top: 24px;
     text-align: center;
 
     & p {
@@ -55,7 +45,7 @@ main {
                 border-radius: .2rem;
             }
     
-            & .languages, .levels {
+            & .languages, .levels, .time {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: 12px;
