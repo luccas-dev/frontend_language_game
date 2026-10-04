@@ -17,14 +17,10 @@
 }
 
 body {
-    height: 100vh;
-    display: grid;
-    justify-items: center;
-    gap: 4rem;
-
     background: var(--bg-color);
 
     margin: 1.5rem 0;
+    font-family: "JetBrains Mono", monospace;
 }
 
 h1, h2 {

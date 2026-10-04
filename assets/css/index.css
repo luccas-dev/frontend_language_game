@@ -63,7 +63,7 @@ main {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 3rem;
+        gap: 2rem;
 
         & .container {
             display: flex;
@@ -227,7 +227,7 @@ main {
         & .container {
             display: flex;
             flex-direction: column;
-            gap: 3rem;
+            gap: 1rem;
 
             & h2 {
                 font-size: 3rem;
@@ -266,29 +266,35 @@ main {
             }
         }
 
-        & #words-container {
-            max-height: 70%;
-            overflow-y: auto;
+        & h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--title-color);
+            font-size: 1.3rem;
+        }
 
-            & h3 {
-                text-align: center;
-                margin-bottom: 10px;
-                color: var(--title-color);
+
+        & p {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            padding: 1rem;
+
+            &#subtitle {
+                text-transform: uppercase;
+                font-weight: bold;
+                color: var(--subtitle-color);
             }
+        }
+
+        & #words-container {
+            max-height: 20%;
+            overflow-y: auto;
+            max-height: 10rem;
 
             & p {
-                display: flex;
-                justify-content: space-between;
-                font-size: 1.2rem;
-
                 padding-bottom: .5rem;
                 border-bottom: 1px solid var(--subtitle-color);
-
-                &#subtitle {
-                    text-transform: uppercase;
-                    font-weight: bold;
-                    color: var(--subtitle-color);
-                }
 
                 & small.true {
                     color: green;
