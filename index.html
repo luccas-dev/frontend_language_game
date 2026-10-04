@@ -9,6 +9,10 @@
 </head>
 <body>
     <main>
+        <div id="modes">
+            <input type="radio" name="mode" id="light-mode">
+            <input type="radio" name="mode" id="dark-mode" checked>
+        </div>
         <section id="config-modal">
             <header>
                 <h1>Destrava Língua</h1>
@@ -16,7 +20,7 @@
             </header>
             <div class="container">
                 <h3>Usuário</h3>
-                <input type="text" name="nome" id="nome" required>
+                <input type="text" name="nome" id="nome" required autocomplete="off">
             </div>
     
             <div class="container">
@@ -92,7 +96,7 @@
             </div>
             <div class="response-container">
                 <span id="message"></span>
-                <input type="text" name="response" id="response" required placeholder="Digite sua resposta">
+                <input type="text" name="response" id="response" required autocomplete="off" placeholder="Digite sua resposta">
                 <button id="btn-send">Enviar Resposta</button>
             </div>
         </section>

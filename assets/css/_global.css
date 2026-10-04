@@ -1,11 +1,13 @@
 :root {
     --bg-color: #0F131C;
-    --primary-text-color: #DFE2EF;
-    --second-text-color: #86948A;
+    --title-color: #fff;
+    --subtitle-color: #86948A;
     --btn-bg-color: #4EDEA3;
+    --input-bg-color: #012718;
     --text-btn-color: #003824;
     --selected-bg-color: #262A34;
-    --input-bg-color: #0A0E17;    
+    --text-input-color: #fff;
+    --hover-input: #7ef1c1;
 }
 
 * {
@@ -21,11 +23,29 @@ body {
     gap: 4rem;
 
     background: var(--bg-color);
-    color: var(--primary-text-color);
 
     margin: 1.5rem 0;
 }
 
+h1, h2 {
+    color: var(--title-color);
+}
+
+h3 {
+    color: var(--subtitle-color);
+}
+
 a {
     text-decoration: none;
+}
+
+.light-mode-active {
+    --bg-color: #fff;
+    --title-color: #000;
+    --subtitle-color: #86948A;
+    --btn-bg-color: #87CEEB;
+    --text-btn-color: #083d52;
+    --selected-bg-color: #262A34;
+    --input-bg-color: #062735;
+    --hover-input: #012938;
 }

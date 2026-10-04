@@ -39,6 +39,9 @@ let dataGame = {
     difficulty: 0
 }
 
+let lightMode = document.querySelector('#light-mode')
+let darkMode = document.querySelector('#dark-mode')
+
 let URL = 'https://backend-language-game.onrender.com'
 // URL = 'http://localhost:3530'
 
@@ -207,4 +210,18 @@ saveButton.addEventListener('click', async () => {
 
 cancelButton.addEventListener('click', () => {
     window.location.reload()
+})
+
+lightMode.addEventListener('change', () => {
+    document.body.classList.toggle('light-mode-active')
+    endModal.style.color = '#000'
+    lightMode.style.background = 'url(./assets/images/light-mode-colored.svg) no-repeat'
+    darkMode.style.background = 'url(./assets/images/dark-mode-colored.svg) no-repeat'
+})
+
+darkMode.addEventListener('change', () => {
+    document.body.classList.toggle('light-mode-active')
+    endModal.style.color = '#fff'
+    lightMode.style.background = 'url(./assets/images/light-mode.svg) no-repeat'
+    darkMode.style.background = 'url(./assets/images/dark-mode.svg) no-repeat'
 })

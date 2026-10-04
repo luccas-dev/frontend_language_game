@@ -3,7 +3,6 @@
 h3 {
     text-transform: uppercase;
     font-size: 12px;
-    color: var(--second-text-color);
 }
 
 header {
@@ -14,11 +13,51 @@ header {
     & p {
         text-transform: uppercase;
         font-size: 12px;
-        color: var(--second-text-color);
+        color: var(--subtitle-color);
     }
 }
 
 main {
+    position: relative;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    & #modes {
+        position: absolute;
+        right: 3rem;
+
+        & input[type='radio'] {
+            appearance: none;
+
+            width: 25px;
+            height: 25px;
+
+            background: var(--text-btn-color);
+            border-radius: 50px;
+            cursor: pointer;
+            opacity: .5;
+
+
+            &:checked {
+                opacity: 1;
+            }
+
+            &#light-mode {
+                background: url(../images/light-mode.svg) no-repeat;
+            }
+
+            &#dark-mode {
+                background: url(../images/dark-mode.svg) no-repeat;
+            }
+
+        }
+    }
+
+    section {
+        max-width: 50rem;
+    }
 
     & #config-modal {
         display: flex;
@@ -34,7 +73,7 @@ main {
             & input#nome {
                 padding: 12px;
                 background-color: var(--input-bg-color);
-                color: var(--primary-text-color);
+                color: var(--text-input-color);
                 border: none;
                 border-bottom: 1px solid var(--btn-bg-color);
                 border-radius: .2rem;
@@ -54,20 +93,22 @@ main {
                     position: absolute;
     
                     &:checked + label {
-                        background-color: var(--selected-bg-color);
-                        color: var(--btn-bg-color);
+                        background-color: var(--btn-bg-color);
+                        color: var(--text-btn-color);
+                        font-weight: bold;
                     }
                 }
                 
                 & label {
                     display: flex;
                     background-color: var(--input-bg-color);
+                    color: var(--text-input-color);
                     padding: 12px;
                     border-radius: .2rem;
                     justify-content: center;
     
                     &:hover {
-                        outline: 1px solid var(--btn-bg-color);
+                        outline: 1px solid var(--hover-input);
                     }
                 }
             }
@@ -116,7 +157,7 @@ main {
 
             & #translation {
                 font-size: 1.1rem;
-                color: var(--second-text-color);
+                color: var(--subtitle-color);
             }
         }
 
@@ -133,6 +174,7 @@ main {
                 font-weight: bold;
                 align-self: end;
                 margin-bottom: .5rem;
+                color: var(--text-input-color);
 
                 &.true {
                     background-color: green;
@@ -149,7 +191,7 @@ main {
                 padding: .8rem;
                 font-size: 1.2rem;
                 background-color: var(--input-bg-color);
-                color: var(--primary-text-color);
+                color: var(--text-input-color);
                 border: none;
                 border-radius: .2rem;
                 margin-bottom: 1rem;
@@ -180,6 +222,7 @@ main {
         display: none;
         flex-direction: column;
         gap: 3rem;
+        color: #fff;
 
         & .container {
             display: flex;
@@ -188,7 +231,6 @@ main {
 
             & h2 {
                 font-size: 3rem;
-                color: var(--primary-text-color);
             }
 
             & .game-data {
@@ -196,7 +238,7 @@ main {
                 justify-content: space-between;
                 gap: 10rem;
                 padding-bottom: 1rem;
-                border-bottom: 1px solid var(--second-text-color);
+                border-bottom: 1px solid var(--subtitle-color);
 
                 & #corrects-wrongs, #difficulty, #player-name-container {
                     display: flex;
@@ -221,7 +263,6 @@ main {
 
             & h3 {
                 font-size: 1.2rem;
-                color: var(--primary-text-color);
             }
         }
 
@@ -232,6 +273,7 @@ main {
             & h3 {
                 text-align: center;
                 margin-bottom: 10px;
+                color: var(--title-color);
             }
 
             & p {
@@ -240,11 +282,12 @@ main {
                 font-size: 1.2rem;
 
                 padding-bottom: .5rem;
-                border-bottom: 1px solid var(--second-text-color);
+                border-bottom: 1px solid var(--subtitle-color);
 
                 &#subtitle {
                     text-transform: uppercase;
                     font-weight: bold;
+                    color: var(--subtitle-color);
                 }
 
                 & small.true {
@@ -266,7 +309,6 @@ main {
                 width: 100%;
                 display: block;
                 padding: 12px;
-                color: white;
                 border: none;
                 border-radius: 8px;
                 font-size: 12px;
@@ -286,7 +328,7 @@ main {
             }
 
             & #btn-cancel {
-                background-color: var(--second-text-color);
+                background-color: var(--subtitle-color);
                 color: var(--bg-color);
             }
         }
