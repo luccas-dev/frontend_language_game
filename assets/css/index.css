@@ -79,7 +79,7 @@ main {
                 border-radius: .2rem;
             }
     
-            & .languages, .levels, .time {
+            & .languages, .themes, .time {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: 12px;
@@ -295,6 +295,7 @@ main {
             & p {
                 padding-bottom: .5rem;
                 border-bottom: 1px solid var(--subtitle-color);
+                padding: 0;
 
                 & small.true {
                     color: green;

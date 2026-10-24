@@ -11,8 +11,9 @@ const endModal = document.querySelector('#end-modal') // Modal de fim de partida
 
 // DADOS DO JOGO
 const fieldName = document.querySelector('#nome') // Campo onde o usuário digita seu nome
-const fieldDifficulty = document.getElementsByName('difficulty') // Campo onde o usuário seleciona a dificuldade do jogo
+const fieldTheme = document.getElementsByName('theme') // Campo onde o usuário seleciona o tema do jogo
 const fieldTime = document.getElementsByName('time') // Campo onde o usuário seleciona o tempo da partida
+const containerLevels = document.querySelector('#container-levels')
 
 // DADOS DO FIM DA PARTIDA
 const playerName = document.querySelector('#player-name') // Campo onde o nome do jogador será exibido no fim da partida
@@ -36,7 +37,7 @@ let dataGame = {
     player_name: '',
     correct_words: 0,
     wrong_words: 0,
-    difficulty: 0
+    theme: ''
 }
 
 let lightMode = document.querySelector('#light-mode')
@@ -44,6 +45,43 @@ let darkMode = document.querySelector('#dark-mode')
 
 let URL = 'https://backend-language-game.onrender.com'
 // URL = 'http://localhost:3530'
+
+const showLevels = async () => {
+    const response = await fetch(`${URL}/list-themes`)
+    const listThemes = await response.json()
+    const themes = Array.from(new Set(listThemes.map(JSON.stringify))).map(JSON.parse)
+
+    createLevels(themes)
+}
+showLevels()
+
+// CRIA OS BOTÕES PARA CADA LEVEL
+function createLevels(themes) {
+    for(let item of themes) {
+        let theme = formatText(item.theme)
+        const buttonLevel = document.createElement('div')
+        const radioLevel = document.createElement('input')
+        radioLevel.type = 'radio'
+        radioLevel.name = 'theme'
+        radioLevel.id = theme
+        radioLevel.value = theme
+
+        const labelLevel = document.createElement('label')
+        labelLevel.classList.add('labelLevel')
+        labelLevel.for = theme
+        labelLevel.innerText = theme
+
+        buttonLevel.appendChild(radioLevel)
+        buttonLevel.appendChild(labelLevel)
+
+        containerLevels.appendChild(buttonLevel)
+    }
+}
+
+// FORMATA OS TEMAS
+function formatText(theme) {
+    return theme.split('_').join(' ')
+}
 
 // FUNÇÃO QUE INICIA O JOGO
 function startGame() {
@@ -63,7 +101,7 @@ function startGame() {
 
 // FUNÇÃO QUE BUSCA UMA PALAVRA ALEATÓRIA NA API
 const randomWord = async () => {
-    const response = await fetch(`${URL}?difficulty=${dataGame.difficulty}`)
+    const response = await fetch(`${URL}?theme=${dataGame.theme}`)
     const data = await response.json()
     palavra = data
 
@@ -97,19 +135,13 @@ function endGame() {
 function showEndModal() {
     endModal.style.display = 'flex'
     playerName.innerHTML += `<em>${dataGame.player_name}</em>`
-    if(dataGame.difficulty == 1) {
-        levelGame.innerHTML += `<em>Fácil</em>`
-    } else if (dataGame.difficulty == 2) {
-        levelGame.innerHTML += `<em>Médio</em>`
-    } else {
-        levelGame.innerHTML += `<em>Dificil</em>`
-    }
+    levelGame.innerHTML += `<em>${dataGame.theme}</em>`
     correctWords.innerHTML += `<em>${dataGame.correct_words}</em>`
     wrongWords.innerHTML += `<em>${dataGame.wrong_words}</em>`
     
     for(item of wordsList) {
         const answerKey = document.createElement('p')
-        answerKey.innerHTML = `<span>${item.word}</span> <span><small class='${item.correct}'>${item.response}</small> ${item.translations}</span>`
+        answerKey.innerHTML = `<span>${item.word}</span> <span><small class='${item.correct}'>${item.response}</small> ${item.translations} ${item.context}</span>`
         wordsContainer.appendChild(answerKey)
     }
 }
@@ -120,8 +152,8 @@ startButton.addEventListener('click', () => {
         return
     }
 
-    if(!Array.from(fieldDifficulty).some(radio => radio.checked)) {
-        alert('Por favor, selecione uma dificuldade para iniciar o jogo.')
+    if(!Array.from(fieldTheme).some(radio => radio.checked)) {
+        alert('Por favor, selecione um tema para iniciar o jogo.')
         return
     }
 
@@ -130,9 +162,9 @@ startButton.addEventListener('click', () => {
 
     dataGame.player_name = fieldName.value
 
-    fieldDifficulty.forEach((radio) => {
+    fieldTheme.forEach((radio) => {
         if(radio.checked) {
-            dataGame.difficulty = radio.value
+            dataGame.theme = radio.value
         }
     })
 
@@ -183,8 +215,8 @@ sendButton.addEventListener('click', async () => {
         dataGame.wrong_words++
     }
 
-    wordsList.push({correct: data.correct, word: data.word, translations: data.translations, response: data.response})
-    translationField.innerText = data.translations
+    wordsList.push({correct: data.correct, word: data.word, translations: data.translations, response: data.response, context: data.context})
+    translationField.innerText = data.translations + data.context
 
     setTimeout(() => {
         sendButton.disabled = false

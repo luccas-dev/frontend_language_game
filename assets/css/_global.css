@@ -45,3 +45,7 @@ a {
     --input-bg-color: #062735;
     --hover-input: #012938;
 }
+
+.labelLevel {
+    text-transform: capitalize;
+}
