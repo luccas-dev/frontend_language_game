@@ -63,12 +63,12 @@ function createLevels(themes) {
         const radioLevel = document.createElement('input')
         radioLevel.type = 'radio'
         radioLevel.name = 'theme'
-        radioLevel.id = theme
-        radioLevel.value = theme
+        radioLevel.id = item.theme
+        radioLevel.value = item.theme
 
         const labelLevel = document.createElement('label')
         labelLevel.classList.add('labelLevel')
-        labelLevel.setAttribute('for', theme)
+        labelLevel.setAttribute('for', item.theme)
         labelLevel.innerText = theme
 
         buttonLevel.appendChild(radioLevel)
